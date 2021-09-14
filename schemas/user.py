@@ -15,9 +15,14 @@ class UserWithToken(BaseModel):
     id: int
     username: str
     email: EmailStr
+    created_at: datetime
     token: str
 
 class User(BaseModel):
+    id: int
     username: str
     email: EmailStr
     created_at: datetime
+
+class UserStatus(BaseModel):
+    status: str

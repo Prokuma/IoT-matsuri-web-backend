@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+    db:
+        image: postgres:13.3-alpine
+        volumes:
+            - dbdata:/var/lib/postgresql/data
+        env_file:
+            - .env
+
+    api:
+        build: .
+        command: pipenv run uvicorn main:app --host 0.0.0.0 --reload
+        volumes:
+            - .:/api
+        ports:
+            - "8000:8000"
+        env_file:
+            - .env
+        depends_on:
+            - db
+
+volumes:
+    dbdata:

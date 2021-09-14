@@ -19,7 +19,7 @@ class User(Base):
     name = Column(String(length=32))
     email = Column(String(length=255),unique=True)
     password_hash = Column(String)
-    create_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime, default=func.now())
     login_tokens = relationship('LoginToken', foreign_keys='LoginToken.user_id')
     devices = relationship('Device', foreign_keys='Device.user_id')
 

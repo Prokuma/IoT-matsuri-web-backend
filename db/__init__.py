@@ -16,7 +16,7 @@ DATABASE_URL = "{}://{}:{}@{}/{}".format(DATABASE, USER, PASSWORD, HOST, DB_NAME
 ECHO_LOG = False
 
 def create_test_database():
-    DATABASE_URL = "{}://{}:{}@{}".format(DATABASE_URL, USER, PASSWORD, HOST)
+    DATABASE_URL = "{}://{}:{}@{}".format(DATABASE, USER, PASSWORD, HOST)
     engine = sqlalchemy.create_engine(DATABASE_URL, echo=ECHO_LOG)
     session = Session(
         bind=engine,
@@ -24,7 +24,7 @@ def create_test_database():
         autoflush=True
     )
     session.connection().connection.set_isolation_level(0)
-    result = session.execute("SELECTE datname from pg_database where datname='%s'" % 'iot_matsuri_test')
+    result = session.execute("SELECT datname from pg_database where datname='%s'" % 'iot_matsuri_test')
     if len(result.all()) == 0:
         session.execute("CREATE DATABASE %s;" % ('iot_matsuri_test'))
     session.connection().connection.set_isolation_level(1)
