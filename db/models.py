@@ -40,6 +40,7 @@ class Device(Base):
 
 class Message(Base):
     id = Column(String(length=255), primary_key=True)
+    is_to_device = Column(Boolean)
     device_id = Column(String(length=255), ForeignKey('device.id'))
     message = Column(String)
     device = relationship('Device', back_populates='messages')
