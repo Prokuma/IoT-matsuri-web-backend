@@ -1,12 +1,16 @@
+from typing import Optional
 from pydantic import BaseModel, validator
 
 class DeviceCreateRequest(BaseModel):
     name: str
 
-class Device(BaseModel):
-    device_id: str
-    device_secret: str
-    name: str
+class DeviceCreateResponse(DeviceCreateRequest):
+    id: str
+    secret: str
+    class Config:
+        orm_mode = True
+
+class Device(DeviceCreateResponse):
     connection: bool
 
 class DeviceList(BaseModel):
@@ -22,3 +26,10 @@ class DeviceStatus(BaseModel):
 
 class DeviceMessageRequest(BaseModel):
     message: str
+
+class DeviceMessageResponse(DeviceMessageRequest):
+    is_to_device : bool
+    device_id : str
+
+    class Config:
+        orm_mode = True

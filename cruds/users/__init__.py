@@ -20,6 +20,11 @@ def get_user_from_id(db: Session, user_id: int) -> User:
 
     return user
 
+def get_user_from_token(db: Session, token: str) -> LoginToken:
+    user = db.query(LoginToken).filter(LoginToken.token == token).first()
+
+    return user
+
 def create_user(db: Session, user: User) -> User:
     db.add(user)
     db.commit()

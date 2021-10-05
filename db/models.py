@@ -4,7 +4,10 @@ from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import func
 import datetime
+from uuid import uuid4
 
+def generate_uuid():
+    return str(uuid4())
 @as_declarative()
 class Base:
     id: Any
@@ -30,7 +33,7 @@ class LoginToken(Base):
     user = relationship('User', back_populates='login_tokens')
 
 class Device(Base):
-    id = Column(String(length=255), primary_key=True)
+    id = Column(String(length=255), primary_key=True, default=generate_uuid)
     secret = Column(String(length=255))
     user_id = Column(Integer, ForeignKey('user.id'))
     name = Column(String(length=32))
@@ -39,7 +42,7 @@ class Device(Base):
     messages = relationship('Message', foreign_keys='Message.device_id')
 
 class Message(Base):
-    id = Column(String(length=255), primary_key=True)
+    id = Column(String(length=255), primary_key=True, default=generate_uuid)
     is_to_device = Column(Boolean)
     device_id = Column(String(length=255), ForeignKey('device.id'))
     message = Column(String)
