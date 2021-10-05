@@ -44,7 +44,7 @@ async def remove_device(device_id: str, db: Session = Depends(get_db), cred: HTT
     status = delete_device(db, device_id, user.user_id)
     return status
 
-@device_router.post("/device/{deivce_id}/message", response_model=DeviceMessageResponse)
+@device_router.post("/device/{deivce_id}/messages", response_model=DeviceMessageResponse)
 async def device_operation(payload: DeviceMessageRequest, device_id: str, db: Session = Depends(get_db), cred: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
     user = get_user_from_token(db, cred.credentials)
     message = create_message(payload.message, db, device_id, user.user_id)
